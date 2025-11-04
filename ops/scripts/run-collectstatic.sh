@@ -5,6 +5,6 @@ export DATABASE_ENGINE=postgresql
 export DATABASE_NAME=nothing
 export DATABASE_PORT=nothing
 export DATABASE_USER=nothing
+export DJANGO_SETTINGS_MODULE=crm_service.settings.base
 
-pip install -r requirements/base.txt
-python manage.py collectstatic --no-input
+python src/manage.py collectstatic --no-input

@@ -1,0 +1,70 @@
+name: "ForgeCRM"
+slug: "forge-crm"
+version: "1.0.0"
+summary: "Complete CRM microservice with account, lead, opportunity, task and campaign management for business automation"
+license: "BSL-1.1->Apache-2.0"
+license_change_date: "2026-11-04"
+categories:
+  - "business"
+  - "crm"
+  - "microservice"
+  - "api"
+targets:
+  - "docker"
+  - "k8s"
+description: |
+  ForgeCRM is a comprehensive Customer Relationship Management microservice built with Django REST Framework.
+  It provides complete CRUD operations for accounts, leads, opportunities, tasks, notes, and campaigns.
+  Features include lead conversion, sales pipeline analytics, forecasting, and campaign performance tracking.
+  
+  Key Features:
+  - Account and contact management
+  - Lead tracking and conversion
+  - Opportunity pipeline management
+  - Task and activity tracking
+  - Campaign management and analytics
+  - RESTful API with filtering and search
+  - Token-based authentication
+  - PostgreSQL with advanced field support
+
+author:
+  name: "Buildly Labs"
+  email: "labs@buildly.io"
+  url: "https://buildly.io"
+
+repository:
+  type: "git"
+  url: "https://github.com/buildly-marketplace/crm_service"
+
+documentation:
+  setup: "devdocs/SETUP.md"
+  operations: "devdocs/OPERATIONS.md"
+  reference: "devdocs/REFERENCE.md"
+
+targets_config:
+  docker:
+    image: "forge-crm:latest"
+    compose_file: "ops/docker-compose.yml"
+    dockerfile: "ops/Dockerfile"
+  k8s:
+    helm_chart_path: "ops/helm/forge-crm"
+    values_example: "ops/helm/forge-crm/values.yaml"
+
+pricing:
+  type: "free"
+  labs_discount: 0
+
+support:
+  scope: "30-day install and configuration support"
+  contact: "Support via Buildly Labs portal"
+  response_goal: "48 hours for installation issues"
+
+health_endpoint: "/health/"
+api_base_path: "/api/"
+
+dependencies:
+  runtime:
+    - "python:3.11"
+    - "postgresql:13"
+  build:
+    - "docker"

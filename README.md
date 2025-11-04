@@ -1,86 +1,105 @@
-# CRM Service
+# ForgeCRM 
 
-The CRM service allows for management of contacts and appointments with users of the application.
+**Complete Customer Relationship Management microservice with comprehensive business automation features.**
 
-## Getting Started
+[![License: BSL-1.1](https://img.shields.io/badge/License-BSL--1.1-blue.svg)](LICENSE.md)
+[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](BUILDLY.yaml)
+[![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](ops/Dockerfile)
+[![Kubernetes](https://img.shields.io/badge/kubernetes-helm--chart-blue.svg)](ops/helm/forge-crm)
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## What is ForgeCRM?
 
-### Prerequisites
+ForgeCRM is a Django-based CRM microservice that provides complete customer relationship management capabilities through a REST API. Built for the Buildly ecosystem, it offers account management, lead tracking, opportunity pipeline, task management, and campaign analytics.
 
-What things you need to install the software and how to install them
+**Key Features:**
+- 📊 **Account & Contact Management** - Comprehensive customer data with flexible fields
+- 🎯 **Lead Tracking & Conversion** - From lead capture to opportunity conversion
+- 💰 **Sales Pipeline Management** - Opportunity tracking with forecasting and analytics  
+- ✅ **Task & Activity Management** - Assignment, tracking, and completion workflows
+- 📈 **Campaign Management** - Marketing campaign planning and performance analytics
+- 🔐 **Secure API** - Token-based authentication with comprehensive permissions
+- 🐳 **Production Ready** - Docker containers and Kubernetes Helm charts included
 
-You must have [Docker](https://www.docker.com/) installed.
+## Quick Start
 
-### Build & run service locally
-
-Build the Docker image:
-
+**Docker (Recommended)**
 ```bash
-docker compose build
+git clone https://github.com/buildly-marketplace/crm_service.git
+cd crm_service
+docker-compose -f ops/docker-compose.yml up -d
+curl http://localhost:8003/health/
 ```
 
-Run a web server with this service:
-
+**Kubernetes**
 ```bash
-docker compose up
+helm install forge-crm ./ops/helm/forge-crm
 ```
 
-Now, open your browser and go to [http://localhost:8080](http://localhost:8080).
+## Documentation
 
-For the admin panel, go to [http://localhost:8080/admin](http://localhost:8080/admin)
-(user: `admin`, password: `admin`).
+📚 **Complete documentation is in [`devdocs/`](devdocs/)**
 
-### Run tests
+- **[Setup Guide](devdocs/SETUP.md)** - Installation, configuration, and first run
+- **[Operations Guide](devdocs/OPERATIONS.md)** - Production deployment and maintenance  
+- **[API Reference](devdocs/REFERENCE.md)** - Complete endpoint documentation with examples
+- **[Release Notes](devdocs/RELEASE_NOTES.md)** - Version history and changes
 
-To run the tests once:
-
-```bash
-docker compose run --rm --entrypoint 'bash scripts/run-tests.sh' {name-of-service}
-```
-
-To run the tests and leave bash open inside the container so that it's possible to
-re-run the tests faster again using `bash scripts/run-tests.sh [--keepdb]`:
+## API Overview
 
 ```bash
-docker compose run --rm --entrypoint 'bash scripts/run-tests.sh --bash-on-finish' {name-of-service}
+# Get authentication token
+curl -X POST http://localhost:8003/api-token-auth/ \
+  -d '{"username": "admin", "password": "admin"}'
+
+# List accounts
+curl -H "Authorization: Token YOUR_TOKEN" \
+  http://localhost:8003/accounts/
+
+# Create lead  
+curl -H "Authorization: Token YOUR_TOKEN" \
+  -X POST http://localhost:8003/leads/ \
+  -d '{"full_name": "John Doe", "email": "john@company.com", "status": "new"}'
 ```
 
-To run bash:
+Interactive API docs available at `/docs/` when running.
+
+## Deployment Targets
+
+- 🐳 **Docker** - Single container with docker-compose
+- ☸️ **Kubernetes** - Helm chart with auto-scaling support  
+- 💻 **Development** - Local setup with hot reload
+
+## Support & Licensing
+
+- **License**: BSL 1.1 → Apache 2.0 (converts November 4, 2026)
+- **Support**: 30-day installation and configuration support included
+- **Community**: GitHub issues for bug reports and feature requests
+
+See [`SUPPORT.md`](SUPPORT.md) for detailed support information.
+
+## Requirements
+
+- Python 3.11+
+- PostgreSQL 13+ (with hstore extension)
+- Docker & Docker Compose (for containerized deployment)
+
+## Health & Monitoring
 
 ```bash
-docker compose run --rm --entrypoint 'bash' {name-of-service}
+# Health check
+curl http://localhost:8003/health/
+# Returns: {"status": "healthy", "database": "connected", "version": "1.0.0"}
 ```
-
-
-## Deployment
-
-Helm Charts for deployment to Digital Ocean, Google Cloud and AWS can be found here.  [HELM](https://github.com/buildlyio/helm-charts)
-
-## Built With
-
-* [TravisCI](http://www.travisci.org) - Recommended CI/CD
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/buildlyio/docs/CONTRIBUTING) for details on our code of conduct, and the process for submitting pull requests to us.
+This project follows the [Buildly Way](https://buildly.io/docs/buildly-way) for marketplace-ready microservices. 
 
-## Versioning
+1. Check existing issues and documentation
+2. Follow the project structure and testing guidelines
+3. Update documentation in `devdocs/` for any changes
+4. Ensure smoke tests pass: `python tests/smoke_tests.py`
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+---
 
-## Authors
-
-* **Buildly** - *Initial work*
-
-See also the list of [contributors](https://github.com/buidlyio/yourproject/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the GPL v3 License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+**Built with ❤️ by [Buildly Labs](https://buildly.io)** | **Available in [Buildly Forge](https://forge.buildly.io)**

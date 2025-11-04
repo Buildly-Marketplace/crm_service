@@ -1,0 +1,137 @@
+# Default values for forge-crm
+# This is a YAML-formatted file.
+
+replicaCount: 1
+
+image:
+  repository: forge-crm
+  pullPolicy: IfNotPresent
+  tag: "1.0.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: crm.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources: 
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+livenessProbe:
+  httpGet:
+    path: /health/
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /health/
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+volumes: []
+volumeMounts: []
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Application configuration
+env:
+  - name: DJANGO_SETTINGS_MODULE
+    value: "crm_service.settings.production"
+  - name: DEBUG
+    value: "False"
+
+envFrom: []
+
+# Database configuration
+postgresql:
+  enabled: true
+  auth:
+    username: "crm_user"
+    password: "changeme"
+    database: "crm_production"
+  architecture: standalone
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
+
+# External database (when postgresql.enabled = false)
+externalDatabase:
+  host: ""
+  port: 5432
+  username: "crm_user"
+  database: "crm_production"
+  existingSecret: ""
+  existingSecretPasswordKey: ""
+
+# Metrics and monitoring
+metrics:
+  enabled: false
+  serviceMonitor:
+    enabled: false
+    namespace: ""
+    additionalLabels: {}
+
+# Additional configuration
+config:
+  secretKey: ""
+  allowedHosts: "crm.local"
+  corsOriginWhitelist: "http://crm.local"
+  
+# Init containers for migrations
+initContainers:
+  enabled: true
