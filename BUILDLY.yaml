@@ -1,5 +1,5 @@
-name: "ForgeCRM"
-slug: "forge-crm"
+name: "CRM Service"
+slug: "crm-service"
 version: "1.0.0"
 summary: "Complete CRM microservice with account, lead, opportunity, task and campaign management for business automation"
 license: "BSL-1.1->Apache-2.0"
@@ -13,7 +13,7 @@ targets:
   - "docker"
   - "k8s"
 description: |
-  ForgeCRM is a comprehensive Customer Relationship Management microservice built with Django REST Framework.
+  CRM Service is a comprehensive Customer Relationship Management microservice built with Django REST Framework.
   It provides complete CRUD operations for accounts, leads, opportunities, tasks, notes, and campaigns.
   Features include lead conversion, sales pipeline analytics, forecasting, and campaign performance tracking.
   
@@ -43,12 +43,12 @@ documentation:
 
 targets_config:
   docker:
-    image: "forge-crm:latest"
+    image: "crm-service:latest"
     compose_file: "ops/docker-compose.yml"
     dockerfile: "ops/Dockerfile"
   k8s:
-    helm_chart_path: "ops/helm/forge-crm"
-    values_example: "ops/helm/forge-crm/values.yaml"
+    helm_chart_path: "ops/helm/crm-service"
+    values_example: "ops/helm/crm-service/values.yaml"
 
 pricing:
   type: "free"

@@ -1,15 +1,15 @@
-# ForgeCRM 
+# CRM Service
 
 **Complete Customer Relationship Management microservice with comprehensive business automation features.**
 
 [![License: BSL-1.1](https://img.shields.io/badge/License-BSL--1.1-blue.svg)](LICENSE.md)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](BUILDLY.yaml)
 [![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](ops/Dockerfile)
-[![Kubernetes](https://img.shields.io/badge/kubernetes-helm--chart-blue.svg)](ops/helm/forge-crm)
+[![Kubernetes](https://img.shields.io/badge/kubernetes-helm--chart-blue.svg)](ops/helm/crm-service)
 
-## What is ForgeCRM?
+## What is CRM Service?
 
-ForgeCRM is a Django-based CRM microservice that provides complete customer relationship management capabilities through a REST API. Built for the Buildly ecosystem, it offers account management, lead tracking, opportunity pipeline, task management, and campaign analytics.
+CRM Service is a Django-based CRM microservice that provides complete customer relationship management capabilities through a REST API. Built for the Buildly ecosystem, it offers account management, lead tracking, opportunity pipeline, task management, and campaign analytics.
 
 **Key Features:**
 - 📊 **Account & Contact Management** - Comprehensive customer data with flexible fields
@@ -32,7 +32,7 @@ curl http://localhost:8003/health/
 
 **Kubernetes**
 ```bash
-helm install forge-crm ./ops/helm/forge-crm
+helm install crm-service ./ops/helm/crm-service
 ```
 
 ## Documentation

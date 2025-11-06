@@ -1,14 +1,14 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "forge-crm.name" -}}
+{{- define "crm-service.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Create a default fully qualified app name.
 */}}
-{{- define "forge-crm.fullname" -}}
+{{- define "crm-service.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -24,16 +24,16 @@ Create a default fully qualified app name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "forge-crm.chart" -}}
+{{- define "crm-service.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "forge-crm.labels" -}}
-helm.sh/chart: {{ include "forge-crm.chart" . }}
-{{ include "forge-crm.selectorLabels" . }}
+{{- define "crm-service.labels" -}}
+helm.sh/chart: {{ include "crm-service.chart" . }}
+{{ include "crm-service.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -43,17 +43,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "forge-crm.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "forge-crm.name" . }}
+{{- define "crm-service.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "crm-service.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "forge-crm.serviceAccountName" -}}
+{{- define "crm-service.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "forge-crm.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "crm-service.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -62,9 +62,9 @@ Create the name of the service account to use
 {{/*
 Database host
 */}}
-{{- define "forge-crm.databaseHost" -}}
+{{- define "crm-service.databaseHost" -}}
 {{- if .Values.postgresql.enabled }}
-{{- printf "%s-postgresql" (include "forge-crm.fullname" .) }}
+{{- printf "%s-postgresql" (include "crm-service.fullname" .) }}
 {{- else }}
 {{- .Values.externalDatabase.host }}
 {{- end }}
@@ -73,7 +73,7 @@ Database host
 {{/*
 Database name
 */}}
-{{- define "forge-crm.databaseName" -}}
+{{- define "crm-service.databaseName" -}}
 {{- if .Values.postgresql.enabled }}
 {{- .Values.postgresql.auth.database }}
 {{- else }}
@@ -84,7 +84,7 @@ Database name
 {{/*
 Database username
 */}}
-{{- define "forge-crm.databaseUsername" -}}
+{{- define "crm-service.databaseUsername" -}}
 {{- if .Values.postgresql.enabled }}
 {{- .Values.postgresql.auth.username }}
 {{- else }}
@@ -95,9 +95,9 @@ Database username
 {{/*
 Database secret name
 */}}
-{{- define "forge-crm.databaseSecretName" -}}
+{{- define "crm-service.databaseSecretName" -}}
 {{- if .Values.postgresql.enabled }}
-{{- printf "%s-postgresql" (include "forge-crm.fullname" .) }}
+{{- printf "%s-postgresql" (include "crm-service.fullname" .) }}
 {{- else }}
 {{- .Values.externalDatabase.existingSecret }}
 {{- end }}
@@ -106,7 +106,7 @@ Database secret name
 {{/*
 Database secret password key
 */}}
-{{- define "forge-crm.databaseSecretPasswordKey" -}}
+{{- define "crm-service.databaseSecretPasswordKey" -}}
 {{- if .Values.postgresql.enabled }}
 {{- "postgres-password" }}
 {{- else }}
@@ -117,6 +117,6 @@ Database secret password key
 {{/*
 Secret name for application secrets
 */}}
-{{- define "forge-crm.secretName" -}}
-{{- printf "%s-secret" (include "forge-crm.fullname" .) }}
+{{- define "crm-service.secretName" -}}
+{{- printf "%s-secret" (include "crm-service.fullname" .) }}
 {{- end }}

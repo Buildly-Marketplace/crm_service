@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "forge-crm.fullname" . }}
+  name: {{ include "crm-service.fullname" . }}
   labels:
-    {{- include "forge-crm.labels" . | nindent 4 }}
+    {{- include "crm-service.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "forge-crm.selectorLabels" . | nindent 6 }}
+      {{- include "crm-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "forge-crm.labels" . | nindent 8 }}
+        {{- include "crm-service.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -27,7 +27,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "forge-crm.serviceAccountName" . }}
+      serviceAccountName: {{ include "crm-service.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- if .Values.initContainers.enabled }}
@@ -41,16 +41,16 @@ spec:
           env:
             {{- toYaml .Values.env | nindent 12 }}
             - name: DATABASE_HOST
-              value: {{ include "forge-crm.databaseHost" . }}
+              value: {{ include "crm-service.databaseHost" . }}
             - name: DATABASE_NAME
-              value: {{ include "forge-crm.databaseName" . }}
+              value: {{ include "crm-service.databaseName" . }}
             - name: DATABASE_USER
-              value: {{ include "forge-crm.databaseUsername" . }}
+              value: {{ include "crm-service.databaseUsername" . }}
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "forge-crm.databaseSecretName" . }}
-                  key: {{ include "forge-crm.databaseSecretPasswordKey" . }}
+                  name: {{ include "crm-service.databaseSecretName" . }}
+                  key: {{ include "crm-service.databaseSecretPasswordKey" . }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -71,20 +71,20 @@ spec:
           env:
             {{- toYaml .Values.env | nindent 12 }}
             - name: DATABASE_HOST
-              value: {{ include "forge-crm.databaseHost" . }}
+              value: {{ include "crm-service.databaseHost" . }}
             - name: DATABASE_NAME
-              value: {{ include "forge-crm.databaseName" . }}
+              value: {{ include "crm-service.databaseName" . }}
             - name: DATABASE_USER
-              value: {{ include "forge-crm.databaseUsername" . }}
+              value: {{ include "crm-service.databaseUsername" . }}
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "forge-crm.databaseSecretName" . }}
-                  key: {{ include "forge-crm.databaseSecretPasswordKey" . }}
+                  name: {{ include "crm-service.databaseSecretName" . }}
+                  key: {{ include "crm-service.databaseSecretPasswordKey" . }}
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "forge-crm.secretName" . }}
+                  name: {{ include "crm-service.secretName" . }}
                   key: secret-key
             - name: ALLOWED_HOSTS
               value: {{ .Values.config.allowedHosts | quote }}

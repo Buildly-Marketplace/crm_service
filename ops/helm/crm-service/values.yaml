@@ -1,10 +1,10 @@
-# Default values for forge-crm
+# Default values for crm-service
 # This is a YAML-formatted file.
 
 replicaCount: 1
 
 image:
-  repository: forge-crm
+  repository: crm-service
   pullPolicy: IfNotPresent
   tag: "1.0.0"
 
