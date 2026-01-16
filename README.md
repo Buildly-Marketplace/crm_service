@@ -93,7 +93,7 @@ curl http://localhost:8003/health/
 
 ## Contributing
 
-This project follows the [Buildly Way](https://buildly.io/docs/buildly-way) for marketplace-ready microservices. 
+This project follows the [[Buildly Way](https://docs.buildly.io/docs/features/forge_marketplace.html) for marketplace-ready microservices. 
 
 1. Check existing issues and documentation
 2. Follow the project structure and testing guidelines
